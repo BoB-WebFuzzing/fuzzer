@@ -31,7 +31,7 @@ type config struct {
 	}	`json:"direct"`
 }
 
-func parseJSON(fileName string) {
+func (c config) parseJSON(fileName string) {
 	data, err := os.Open(fileName)
 
 	if err != nil {
