@@ -19,7 +19,7 @@ type config struct {
 	Memory          string	`json:"memory"`
 	FirstCrash      bool	`json:"first_crash"`
 	Cores           int		`json:"cores"`
-	Direct          struct {
+	Login          struct {
 		URL              string				`json:"url"`
 		Port             int				`json:"port"`
 		PostData         string				`json:"postData"`
@@ -28,7 +28,7 @@ type config struct {
 		PositiveBody     string				`json:"positiveBody"`
 		Method           string				`json:"method"`
 		LoginSessionCookie string			`json:"loginSessionCookie"`
-	}	`json:"direct"`
+	}	`json:"login"`
 }
 
 func (c *config) parseJSON(fileName string) {
@@ -56,13 +56,13 @@ func printConfig() {
 	fmt.Printf("%-20v %v\n", "Memory:", configData.Memory)
 	fmt.Printf("%-20v %v\n", "FirstCrash:", configData.FirstCrash)
 	fmt.Printf("%-20v %v\n", "Cores:", configData.Cores)
-	fmt.Printf("%-20v\n", "Direct:")
-	fmt.Printf("	%-20v %v\n", "URL:", configData.Direct.URL)
-	fmt.Printf("	%-20v %v\n", "Port:", configData.Direct.Port)
-	fmt.Printf("	%-20v %v\n", "PostData:", configData.Direct.PostData)
-	fmt.Printf("	%-20v %v\n", "GetData:", configData.Direct.GetData)
-	fmt.Printf("	%-20v %v\n", "PositiveHeaders:", configData.Direct.PositiveHeaders)
-	fmt.Printf("	%-20v %v\n", "PositiveBody:", configData.Direct.PositiveBody)
-	fmt.Printf("	%-20v %v\n", "Method:", configData.Direct.Method)
-	fmt.Printf("	%-20v %v\n", "LoginSessionCookie:", configData.Direct.LoginSessionCookie)
+	fmt.Printf("%-20v\n", "Login:")
+	fmt.Printf("	%-20v %v\n", "URL:", configData.Login.URL)
+	fmt.Printf("	%-20v %v\n", "Port:", configData.Login.Port)
+	fmt.Printf("	%-20v %v\n", "PostData:", configData.Login.PostData)
+	fmt.Printf("	%-20v %v\n", "GetData:", configData.Login.GetData)
+	fmt.Printf("	%-20v %v\n", "PositiveHeaders:", configData.Login.PositiveHeaders)
+	fmt.Printf("	%-20v %v\n", "PositiveBody:", configData.Login.PositiveBody)
+	fmt.Printf("	%-20v %v\n", "Method:", configData.Login.Method)
+	fmt.Printf("	%-20v %v\n", "LoginSessionCookie:", configData.Login.LoginSessionCookie)
 }

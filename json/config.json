@@ -10,14 +10,14 @@
     "memory": "8G",
     "first_crash": true,
     "cores": 1,
-    "direct": {
-      "url": "http://localhost",
-      "port": 3000,
-      "postData": "id=admin&pw=admin",
-      "getData": "id=guest&pw=guest",
-      "positiveHeaders": {},
-      "positiveBody": "",
-      "method": "POST",
-      "loginSessionCookie" : ""
+    "login": {
+        "url": "http://localhost",
+        "port": 3000,
+        "postData": "id=admin&pw=admin",
+        "getData": "id=guest&pw=guest",
+        "positiveHeaders": {},
+        "positiveBody": "",
+        "method": "POST",
+        "loginSessionCookie" : ""
     }
-  }
+}
