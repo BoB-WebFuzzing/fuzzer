@@ -19,15 +19,15 @@ type config struct {
 	Memory          string	`json:"memory"`
 	FirstCrash      bool	`json:"first_crash"`
 	Cores           int		`json:"cores"`
-	Login          struct {
-		URL              string				`json:"url"`
-		Port             int				`json:"port"`
-		PostData         string				`json:"postData"`
-		GetData          string				`json:"getData"`
-		PositiveHeaders  map[string]string	`json:"positiveHeaders"`
-		PositiveBody     string				`json:"positiveBody"`
-		Method           string				`json:"method"`
-		LoginSessionCookie string			`json:"loginSessionCookie"`
+	Login			struct {
+		URL					string				`json:"url"`
+		Port				int					`json:"port"`
+		PostData			string				`json:"postData"`
+		GetData				string				`json:"getData"`
+		PositiveHeaders		map[string]string	`json:"positiveHeaders"`
+		PositiveBody		string				`json:"positiveBody"`
+		Method				string				`json:"method"`
+		LoginSessionCookie	string				`json:"loginSessionCookie"`
 	}	`json:"login"`
 }
 
