@@ -31,7 +31,7 @@ type config struct {
 	}	`json:"direct"`
 }
 
-func (c config) parseJSON(fileName string) {
+func (c *config) parseJSON(fileName string) {
 	data, err := os.Open(fileName)
 
 	if err != nil {
@@ -41,7 +41,7 @@ func (c config) parseJSON(fileName string) {
 	defer data.Close()
 	
 	byteValue, _ := ioutil.ReadAll(data)
-	json.Unmarshal(byteValue, &configData)
+	json.Unmarshal(byteValue, &c)
 }
 
 func printConfig() {
