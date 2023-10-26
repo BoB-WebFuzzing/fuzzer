@@ -15,7 +15,7 @@
         "port": 3000,
         "postData": "id=admin&pw=admin",
         "getData": "id=guest&pw=guest",
-        "positiveHeaders": {},
+        "positiveHeaders": {"content-type": "Application/json"},
         "positiveBody": "",
         "method": "POST",
         "loginSessionCookie" : ""
