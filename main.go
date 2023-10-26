@@ -1,11 +1,16 @@
 package main
 
 import (
+
 )
 
 var configData config
+var requestData request
 
 func main() {
-	parseJSON("config.json")
+	(*config).parseJSON(&configData, "json/config.json")
 	printConfig()
+
+	(*request).parseJSON(&requestData, "json/request_data.json")
+	printRequest()
 }
