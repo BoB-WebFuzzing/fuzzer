@@ -1,0 +1,589 @@
+{
+    "requestsFound":{
+    "GET http://localhost:8080/login ":{
+    "_id":1,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    },
+    "_resourceType":"endpoint",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":2,
+    "from":"",
+    "key":"GET http://localhost:8080/login ",
+    "response_status":200,
+    "response_content-type":"text/html; charset=UTF-8"
+    },
+    "GET http://localhost:8080/cmdi ":{
+    "_id":2,
+    "_urlstr":"http://localhost:8080/cmdi",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    },
+    "_resourceType":"endpoint",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi",
+    "attempts":1,
+    "processed":2,
+    "from":"",
+    "key":"GET http://localhost:8080/cmdi ",
+    "response_status":200,
+    "response_content-type":"text/html; charset=UTF-8"
+    },
+    "GET http://localhost:8080/message ":{
+    "_id":3,
+    "_urlstr":"http://localhost:8080/message",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    },
+    "_resourceType":"endpoint",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/message",
+    "attempts":1,
+    "processed":2,
+    "from":"",
+    "key":"GET http://localhost:8080/message ",
+    "response_status":200,
+    "response_content-type":"text/html; charset=UTF-8"
+    },
+    "POST http://localhost:8080/login username=W'tcher&password=Witcher":{
+    "_id":4,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=W'tcher&password=Witcher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=W'tcher&password=Witcher",
+    "response_content-type":"text/html; charset=utf-8"
+    },
+    "POST http://localhost:8080/login username=127.0.0.1&password=Witcher":{
+    "_id":5,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=127.0.0.1&password=Witcher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=127.0.0.1&password=Witcher",
+    "response_content-type":"text/html; charset=utf-8"
+    },
+    "GET http://localhost:8080/login?username=127.0.0.1&password=Witcher ":{
+    "_id":6,
+    "_urlstr":"http://localhost:8080/login?username=127.0.0.1&password=Witcher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=127.0.0.1&password=Witcher",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/login?username=127.0.0.1&password=Witcher ",
+    "response_status":200,
+    "response_content-type":"text/html; charset=UTF-8"
+    },
+    "POST http://localhost:8080/login username=1998-10-11&password=Wi'cher":{
+    "_id":7,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=1998-10-11&password=Wi'cher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=1998-10-11&password=Wi'cher",
+    "response_content-type":"text/html; charset=utf-8"
+    },
+    "POST http://localhost:8080/login username=1998-10-11&password=Witcher":{
+    "_id":8,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=1998-10-11&password=Witcher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=1998-10-11&password=Witcher"
+    },
+    "GET http://localhost:8080/login?username=1998-10-11&password=Witcher ":{
+    "_id":9,
+    "_urlstr":"http://localhost:8080/login?username=1998-10-11&password=Witcher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=1998-10-11&password=Witcher",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/login?username=1998-10-11&password=Witcher "
+    },
+    "GET http://localhost:8080/login?username=W%27tcher&password=Witcher ":{
+    "_id":10,
+    "_urlstr":"http://localhost:8080/login?username=W%27tcher&password=Witcher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=W%27tcher&password=Witcher",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/login?username=W%27tcher&password=Witcher "
+    },
+    "POST http://localhost:8080/login username=127.0.0.1&password=Wi'cher":{
+    "_id":11,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=127.0.0.1&password=Wi'cher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=127.0.0.1&password=Wi'cher"
+    },
+    "POST http://localhost:8080/login username=W'tcher&password=Wi'cher":{
+    "_id":12,
+    "_urlstr":"http://localhost:8080/login",
+    "_method":"POST",
+    "_postData":"username=W'tcher&password=Wi'cher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/login",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/login username=W'tcher&password=Wi'cher"
+    },
+    "GET http://localhost:8080/login?username=1998-10-11&password=Wi%27cher ":{
+    "_id":13,
+    "_urlstr":"http://localhost:8080/login?username=1998-10-11&password=Wi%27cher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=1998-10-11&password=Wi%27cher",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/login?username=1998-10-11&password=Wi%27cher "
+    },
+    "GET http://localhost:8080/login?username=127.0.0.1&password=Wi%27cher ":{
+    "_id":14,
+    "_urlstr":"http://localhost:8080/login?username=127.0.0.1&password=Wi%27cher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=127.0.0.1&password=Wi%27cher",
+    "attempts":1,
+    "processed":0,
+    "from":"InterceptedRequest"
+    },
+    "GET http://localhost:8080/login?username=W%27tcher&password=Wi%27cher ":{
+    "_id":15,
+    "_urlstr":"http://localhost:8080/login?username=W%27tcher&password=Wi%27cher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/login",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/login?username=W%27tcher&password=Wi%27cher",
+    "attempts":1,
+    "processed":0,
+    "from":"InterceptedRequest"
+    },
+    "POST http://localhost:8080/cmdi command=1998-10-11":{
+    "_id":16,
+    "_urlstr":"http://localhost:8080/cmdi",
+    "_method":"POST",
+    "_postData":"command=1998-10-11",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/cmdi",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/cmdi command=1998-10-11",
+    "response_content-type":"text/html; charset=utf-8"
+    },
+    "POST http://localhost:8080/cmdi command=127.0.0.1":{
+    "_id":17,
+    "_urlstr":"http://localhost:8080/cmdi",
+    "_method":"POST",
+    "_postData":"command=127.0.0.1",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/cmdi",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/cmdi command=127.0.0.1",
+    "response_content-type":"text/html; charset=utf-8"
+    },
+    "GET http://localhost:8080/cmdi?command=127.0.0.1 ":{
+    "_id":18,
+    "_urlstr":"http://localhost:8080/cmdi?command=127.0.0.1",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/cmdi",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi?command=127.0.0.1",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/cmdi?command=127.0.0.1 ",
+    "response_status":200,
+    "response_content-type":"text/html; charset=UTF-8"
+    },
+    "GET http://localhost:8080/cmdi?command=1998-10-11 ":{
+    "_id":19,
+    "_urlstr":"http://localhost:8080/cmdi?command=1998-10-11",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/cmdi",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi?command=1998-10-11",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/cmdi?command=1998-10-11 "
+    },
+    "POST http://localhost:8080/cmdi command=W'tcher":{
+    "_id":20,
+    "_urlstr":"http://localhost:8080/cmdi",
+    "_method":"POST",
+    "_postData":"command=W'tcher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/cmdi",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/cmdi command=W'tcher"
+    },
+    "GET http://localhost:8080/cmdi?command=W%27tcher ":{
+    "_id":21,
+    "_urlstr":"http://localhost:8080/cmdi?command=W%27tcher",
+    "_method":"GET",
+    "_postData":"",
+    "_headers":{
+    "referer":"http://localhost:8080/cmdi",
+    "upgrade-insecure-requests":"1",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-mobile":"?0",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    },
+    "_resourceType":"document",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/cmdi?command=W%27tcher",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequest",
+    "key":"GET http://localhost:8080/cmdi?command=W%27tcher "
+    },
+    "POST http://localhost:8080/message message=127.0.0.1":{
+    "_id":22,
+    "_urlstr":"http://localhost:8080/message",
+    "_method":"POST",
+    "_postData":"message=127.0.0.1",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/message",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/message",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/message message=127.0.0.1"
+    },
+    "POST http://localhost:8080/message message=1998-10-11":{
+    "_id":23,
+    "_urlstr":"http://localhost:8080/message",
+    "_method":"POST",
+    "_postData":"message=1998-10-11",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/message",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/message",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/message message=1998-10-11"
+    },
+    "POST http://localhost:8080/message message=W'tcher":{
+    "_id":24,
+    "_urlstr":"http://localhost:8080/message",
+    "_method":"POST",
+    "_postData":"message=W'tcher",
+    "_headers":{
+    "sec-ch-ua":"\"Chromium\";v=\"117\", \"Not;A=Brand\";v=\"8\"",
+    "sec-ch-ua-platform":"\"Linux\"",
+    "referer":"http://localhost:8080/message",
+    "sec-ch-ua-mobile":"?0",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/117.0.0.0 Safari/537.36",
+    "content-type":"application/json",
+    "accept":"*/*",
+    "origin":"http://localhost:8080"
+    },
+    "_resourceType":"fetch",
+    "multipleParamKeys":{
+    },
+    "_url":"http://localhost:8080/message",
+    "attempts":1,
+    "processed":1,
+    "from":"InterceptedRequestSelf",
+    "response_status":200,
+    "key":"POST http://localhost:8080/message message=W'tcher"
+    }
+    },
+    "inputSet":[
+    "password=Witcher",
+    "username=W'tcher",
+    "username=127.0.0.1",
+    "username=1998-10-11",
+    "password=Wi'cher",
+    "username=W%27tcher",
+    "password=Wi%27cher",
+    "command=1998-10-11",
+    "command=127.0.0.1",
+    "command=W'tcher",
+    "command=W%27tcher",
+    "message=127.0.0.1",
+    "=127.0.0.1",
+    "message=1998-10-11",
+    "message=W'tcher"
+    ]
+}
