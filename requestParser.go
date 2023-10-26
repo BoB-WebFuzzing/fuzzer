@@ -8,20 +8,20 @@ import (
 )
 
 type RequestInfo struct {
-	ID                 int    `json:"_id"`
-	URLString          string `json:"_urlstr"`
-	Method             string `json:"_method"`
-	PostData           string `json:"_postData"`
-	Headers            map[string]string `json:"_headers"`
-	ResourceType       string `json:"_resourceType"`
-	MultipleParamKeys  map[string]interface{} `json:"multipleParamKeys"`
-	URL                string `json:"_url"`
-	Attempts           int    `json:"attempts"`
-	Processed          int    `json:"processed"`
-	From               string `json:"from"`
-	Key                string `json:"key"`
-	ResponseStatus     int    `json:"response_status"`
-	ResponseContentType string `json:"response_content-type"`
+	ID					int						`json:"_id"`
+	URLString			string					`json:"_urlstr"`
+	Method				string					`json:"_method"`
+	PostData			string					`json:"_postData"`
+	Headers				map[string]string		`json:"_headers"`
+	ResourceType		string					`json:"_resourceType"`
+	MultipleParamKeys	map[string]interface{}	`json:"multipleParamKeys"`
+	URL					string					`json:"_url"`
+	Attempts			int						`json:"attempts"`
+	Processed			int						`json:"processed"`
+	From				string					`json:"from"`
+	Key					string					`json:"key"`
+	ResponseStatus		int						`json:"response_status"`
+	ResponseContentType	string					`json:"response_content-type"`
 }
 
 type InputSet []string
