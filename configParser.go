@@ -9,7 +9,7 @@ import (
 
 type config struct {
 	Testname		string	`json:"testname"`
-	AflPath			string	`json:"afl_path"`
+	AFLPath			string	`json:"afl_path"`
 	TargetBinary    string	`json:"target_binary"`
 	BaseURL         string	`json:"base_url"`
 	BasePort        int		`json:"base_port"`
@@ -46,7 +46,7 @@ func parseJSON(fileName string) {
 
 func printConfig() {
 	fmt.Printf("%-20v %v\n", "Testname:", configData.Testname)
-	fmt.Printf("%-20v %v\n", "AflPath:", configData.AflPath)
+	fmt.Printf("%-20v %v\n", "AFLPath:", configData.AFLPath)
 	fmt.Printf("%-20v %v\n", "TargetBinary:", configData.TargetBinary)
 	fmt.Printf("%-20v %v\n", "BaseURL:", configData.BaseURL)
 	fmt.Printf("%-20v %v\n", "BasePort:", configData.BasePort)
