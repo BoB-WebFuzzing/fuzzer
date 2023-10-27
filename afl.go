@@ -13,11 +13,7 @@ func runAFL(fuzzingPath string) {
 	
 	go exitAFL(cmd)
 	
-	output, err := cmd.CombinedOutput()
-	
-	if err != nil {
-		fmt.Println("Error occurred but will continue : ", err)
-	}
+	output, _ := cmd.CombinedOutput()
 
 	os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 }
