@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+var requestData request
+
 type RequestInfo struct {
 	ID					int						`json:"_id"`
 	URLString			string					`json:"_urlstr"`

@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+var configData config
+
 type config struct {
 	Testname		string	`json:"testname"`
 	AFLPath			string	`json:"afl_path"`
