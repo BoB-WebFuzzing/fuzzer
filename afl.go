@@ -10,17 +10,16 @@ import (
 
 func runAFL(fuzzingPath string) {
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
-
+	
+	go exitAFL(cmd)
+	
 	output, err := cmd.CombinedOutput()
-
-	fmt.Println(string(output))
-
-
+	
 	if err != nil {
-		// panic(err)
+		fmt.Println("Error occurred but will continue : ", err)
 	}
 
-	fmt.Println(string(output))
+	os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 }
 
 func initDir(i int) {
@@ -61,9 +60,7 @@ func createScript(fuzzingPath string) {
 	defer file.Close()
 
 	var targets []string
-	scriptContent := `#!/bin/sh
-
-`
+	scriptContent := "#!/bin/sh\n\n"
 
 	for key := range requestData.RequestsFound {
 		targets = append(targets, strings.Split(key, " ")[1])
