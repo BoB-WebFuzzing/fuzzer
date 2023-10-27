@@ -5,5 +5,5 @@ run:
 		go run *.go
 
 clean:
-		rm -f fuzzer
+		rm -rf fuzzer fuzzing-*
 
