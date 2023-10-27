@@ -40,14 +40,6 @@ func Login() {
 
 	defer res.Body.Close()
 
-	// data, err := ioutil.ReadAll(res.Body)
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// fmt.Println(string(data))
-
 	cookies := res.Cookies()
 	for _, cookie := range cookies {
 		fmt.Println(cookie.Name, ":", cookie.Value)
