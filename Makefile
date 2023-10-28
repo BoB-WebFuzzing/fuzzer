@@ -7,3 +7,5 @@ run:
 clean:
 	rm -rf fuzzer fuzzing-*
 
+clean-dir:
+	rm -rf fuzzing-*
