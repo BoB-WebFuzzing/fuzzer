@@ -19,7 +19,7 @@ func exitAFL(c *exec.Cmd) {
 	err := process.Signal(syscall.SIGINT)
 
 	if err != nil {
-		fmt.Println("Failed to send SIGINT:", err)
+		fmt.Println("\nFailed to send SIGINT:", err)
 	}
 
 	fmt.Println("\nSIGINT received. Exiting...")
