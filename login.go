@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 )
@@ -45,8 +46,10 @@ func Login() {
 		fmt.Println(cookie.Name, ":", cookie.Value)
 
 		if matched, _ := regexp.MatchString(`(?i)sess`, cookie.Name); matched {
-			fmt.Println("Cookie Name:", cookie.Name)
-			fmt.Println("Cookie Value:", cookie.Value)
+			fmt.Println("	Cookie Name:", cookie.Name)
+			fmt.Println("	Cookie Value:", cookie.Value)
+
+			os.Setenv("LOGIN_COOKIE", cookie.Name + ":" + cookie.Value)
 
 			sessid = cookie.Value
 		}
