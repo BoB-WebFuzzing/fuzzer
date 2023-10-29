@@ -10,11 +10,7 @@ import (
 	"time"
 )
 
-type fuzzCampaignStatus struct {
-	TrialStart		string			`json:"trial_start"`
-	TrialComplete	bool			`json:"trial_complete"`
-	Targets			[]fuzzTarget	`json:"targets"`
-}
+var fuzzStat fuzzCampaignStatus
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -25,10 +21,23 @@ type fuzzTarget struct {
 	LastCompletedRefuzz	int				`json:"last_completed_refuzz"`
 }
 
+type fuzzCampaignStatus struct {
+	TrialStart		string			`json:"trial_start"`
+	TrialComplete	bool			`json:"trial_complete"`
+	Targets			[]fuzzTarget	`json:"targets"`
+}
+
 func runAFL(fuzzingPath string) {
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
+	// for i := 0; i < 5; i++ {
+	// 	createSeed(fuzzingPath, i)
+	// }
+
+	createSeed(fuzzingPath)
+
 	go exitAFL(cmd)
+	finishFuzz(fuzzingPath)
 
 	output, _ := cmd.CombinedOutput()
 
@@ -38,10 +47,12 @@ func runAFL(fuzzingPath string) {
 func initDir(i int) {
 	fuzzingDir := fmt.Sprintf("fuzzing-%d", i)
 	inputDir := fuzzingDir + "/input"
+	seedsDir := inputDir + "/seeds"
 	outputDir := fuzzingDir + "/output"
 
 	mkdir(fuzzingDir)
 	mkdir(inputDir)
+	mkdir(seedsDir)
 	mkdir(outputDir)
 
 	createScript(fuzzingDir)
@@ -59,7 +70,7 @@ func mkdir(dirName string) {
 	} else if err != nil {
 		panic(err)
 	} else {
-		fmt.Println("Directory already exists:", dirName)
+		// fmt.Println("Directory already exists:", dirName)
 	}
 }
 
@@ -81,7 +92,7 @@ func createScript(fuzzingPath string) {
 	}
 
 	scriptContent += configData.AFLPath + "afl-fuzz"
-	scriptContent += " -i " + fuzzingPath + "/input"
+	scriptContent += " -i " + fuzzingPath + "/input/seeds"
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
@@ -124,7 +135,6 @@ func createDict(fuzzingPath string) {
 }
 
 func createFuzzStat(fuzzingPath string) {
-	var fuzzStat fuzzCampaignStatus
 	uniqCheck := make(map[string]int)
 	targetIndex := 0
 	
@@ -176,4 +186,56 @@ func createFuzzStat(fuzzingPath string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func createSeed(fuzzingPath string) {
+	var seed string
+
+	for i := 0; i < len(fuzzStat.Targets); i++ {
+		for j := 0; j < len(fuzzStat.Targets[i].Requests); j++ {
+			dir := fuzzingPath + fmt.Sprintf("/input/seeds/%v", strings.ReplaceAll(strings.Split(fuzzStat.Targets[i].TargetPath, "//")[1], "/", "+"))
+			req := fuzzStat.Targets[i].Requests[j]
+			var getQuery string
+			var postData string
+			var headers string
+
+			if strings.Split(req, " ")[0] == "GET" {
+				if strings.Contains(req, "?") {
+					getQuery = strings.Split(strings.Split(req, "?")[1], " ")[0]
+				}
+			} else if strings.Split(req, " ")[0] == "POST" {
+				postData = requestData.RequestsFound[req].PostData
+			}
+
+			for key, value := range requestData.RequestsFound[req].Headers {
+				headers += fmt.Sprintf("%v:%v\n", key, value)
+			}
+
+			fmt.Println(i, j, "GET :", getQuery, "POST :", postData)
+
+			mkdir(dir)
+
+			seed = fmt.Sprintf("%v\x00%v\x00%v", getQuery, postData, headers)
+
+			file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
+
+			if err != nil {
+				panic(err)
+			}
+		
+			defer file.Close()
+			
+			_, err = file.Write([]byte(seed))
+		
+			if err != nil {
+				panic(err)
+			}
+		}
+	}
+}
+
+func finishFuzz(fuzzingPath string) {
+	copyDir := fuzzingPath + "/../results"
+
+	mkdir(copyDir)
 }
