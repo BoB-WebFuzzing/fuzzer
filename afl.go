@@ -28,10 +28,15 @@ type fuzzCampaignStatus struct {
 	Targets			[]fuzzTarget	`json:"targets"`
 }
 
-func runAFL(fuzzingPath string, targetPoint string) {
+func runAFL(fuzzingPath string, i int) {
+	createDict(fuzzingPath)
+	createFuzzStat(fuzzingPath)
+	createSeed(fuzzingPath)
+	createScript(fuzzingPath, targetPoints[i])
+
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
-	runTimer(fuzzingPath, targetPoint, configData.Timeout)
+	runTimer(fuzzingPath, targetPoints[i], configData.Timeout)
 	go exitAFL(cmd)
 	finishFuzz(fuzzingPath)
 
@@ -51,11 +56,6 @@ func initDir(i int) string {
 	mkdir(seedsDir)
 	mkdir(outputDir)
 
-	createDict(fuzzingDir)
-	createFuzzStat(fuzzingDir)
-	createScript(fuzzingDir)
-	createSeed(fuzzingDir)
-
 	return fuzzingDir
 }
 
@@ -73,7 +73,7 @@ func mkdir(dirName string) {
 	}
 }
 
-func createScript(fuzzingPath string) {
+func createScript(fuzzingPath string, targetPoint string) {
 	scriptPath := fuzzingPath + "/run.sh"
 	file, err := os.Create(scriptPath)
 
@@ -91,7 +91,7 @@ func createScript(fuzzingPath string) {
 	}
 
 	scriptContent += configData.AFLPath + "afl-fuzz"
-	scriptContent += " -i " + fuzzingPath + "/input/seeds"
+	scriptContent += " -i " + fuzzingPath + "/input/seeds/" + targetPoint
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
