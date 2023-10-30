@@ -11,6 +11,7 @@ import (
 )
 
 var fuzzStat fuzzCampaignStatus
+var targetPoints []string	
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -27,15 +28,10 @@ type fuzzCampaignStatus struct {
 	Targets			[]fuzzTarget	`json:"targets"`
 }
 
-func runAFL(fuzzingPath string) {
+func runAFL(fuzzingPath string, targetPoint string) {
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
-	// for i := 0; i < 5; i++ {
-	// 	createSeed(fuzzingPath, i)
-	// }
-
-	createSeed(fuzzingPath)
-
+	runTimer(fuzzingPath, targetPoint, configData.Timeout)
 	go exitAFL(cmd)
 	finishFuzz(fuzzingPath)
 
@@ -44,7 +40,7 @@ func runAFL(fuzzingPath string) {
 	os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 }
 
-func initDir(i int) {
+func initDir(i int) string {
 	fuzzingDir := fmt.Sprintf("fuzzing-%d", i)
 	inputDir := fuzzingDir + "/input"
 	seedsDir := inputDir + "/seeds"
@@ -55,9 +51,12 @@ func initDir(i int) {
 	mkdir(seedsDir)
 	mkdir(outputDir)
 
-	createScript(fuzzingDir)
 	createDict(fuzzingDir)
 	createFuzzStat(fuzzingDir)
+	createScript(fuzzingDir)
+	createSeed(fuzzingDir)
+
+	return fuzzingDir
 }
 
 func mkdir(dirName string) {
@@ -192,8 +191,12 @@ func createSeed(fuzzingPath string) {
 	var seed string
 
 	for i := 0; i < len(fuzzStat.Targets); i++ {
+		targetPoint := strings.ReplaceAll(strings.Split(fuzzStat.Targets[i].TargetPath, "//")[1], "/", "+")
+		dir := fuzzingPath + fmt.Sprintf("/input/seeds/%v", targetPoint)
+
+		targetPoints = append(targetPoints, targetPoint)
+
 		for j := 0; j < len(fuzzStat.Targets[i].Requests); j++ {
-			dir := fuzzingPath + fmt.Sprintf("/input/seeds/%v", strings.ReplaceAll(strings.Split(fuzzStat.Targets[i].TargetPath, "//")[1], "/", "+"))
 			req := fuzzStat.Targets[i].Requests[j]
 			var getQuery string
 			var postData string
@@ -210,8 +213,6 @@ func createSeed(fuzzingPath string) {
 			for key, value := range requestData.RequestsFound[req].Headers {
 				headers += fmt.Sprintf("%v:%v\n", key, value)
 			}
-
-			fmt.Println(i, j, "GET :", getQuery, "POST :", postData)
 
 			mkdir(dir)
 
