@@ -43,7 +43,7 @@ func main() {
 	// }
 
 	// test
-	runAFL(initDir(0), targetPoints[0])
+	runAFL(initDir(0), 0)
 }
 
 func usage() {
