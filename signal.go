@@ -11,7 +11,7 @@ import (
 func exitAFL(c *exec.Cmd) {
 	interrupt := make(chan os.Signal, 1)
 
-	signal.Notify(interrupt, os.Interrupt, syscall.SIGINT)
+	signal.Notify(interrupt, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	<-interrupt
 
