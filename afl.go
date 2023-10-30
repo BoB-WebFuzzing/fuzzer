@@ -11,7 +11,7 @@ import (
 )
 
 var fuzzStat fuzzCampaignStatus
-var targetPoints map[string]string	
+var targetPoints map[string]string
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -39,7 +39,7 @@ func runAFL(fuzzingPath string, i int) {
 	// cmd.Run()
 	go exitAFL(cmd)
 	// time.Sleep(3 * time.Second)
-	go runTimer(fuzzingPath, configData.Timeout)
+	go runTimer(fuzzingPath, configData.Timeout, cmd)
 	finishFuzz(fuzzingPath)
 
 	output, _ := cmd.CombinedOutput()
@@ -93,7 +93,7 @@ func createScript(fuzzingPath string, i int) {
 	}
 
 	scriptContent += configData.AFLPath + "afl-fuzz"
-	scriptContent += " -i " + fuzzingPath + "/input/seeds/"
+	scriptContent += " -i " + fuzzingPath + "/input/seeds/" + strings.ReplaceAll(strings.Split(targets[i], "//")[1], "/", "+")
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
@@ -138,7 +138,7 @@ func createDict(fuzzingPath string) {
 func createFuzzStat(fuzzingPath string) {
 	uniqCheck := make(map[string]int)
 	targetIndex := 0
-	
+
 	fuzzStat.TrialStart = time.Now().Format("2006_01_02_15_04")
 	fuzzStat.TrialComplete = false
 	fuzzStat.Targets = []fuzzTarget{}
