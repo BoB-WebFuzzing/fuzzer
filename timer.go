@@ -8,7 +8,7 @@ import (
 
 func runTimer(fuzzingPath string, timeout int) {
 	interval := 1 * time.Second
-	crashes := 0
+	var crashes int
 	
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
@@ -20,6 +20,7 @@ func runTimer(fuzzingPath string, timeout int) {
 		}
 
 		for _, file := range files {
+			crashes = 0
 			if !file.IsDir() {
 				if startsWith(file.Name(), "id:") { 
 					crashes++
