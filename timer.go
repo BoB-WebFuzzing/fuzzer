@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-func runTimer(fuzzingPath string, targetPoint string, timeout int) {
+func runTimer(fuzzingPath string, timeout int) {
 	interval := 1 * time.Second
 	crashes := 0
 	
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
 
-		files, err := ioutil.ReadDir(fuzzingPath + "/input/seeds/" + targetPoint)
+		files, err := ioutil.ReadDir(fuzzingPath + "/output/default/crashes")
 
 		if err != nil {
 			panic(err)
