@@ -11,7 +11,7 @@ import (
 )
 
 var fuzzStat fuzzCampaignStatus
-var targetPoints []string	
+var targetPoints map[string]string	
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -32,14 +32,14 @@ func runAFL(fuzzingPath string, i int) {
 	createDict(fuzzingPath)
 	createFuzzStat(fuzzingPath)
 	createSeed(fuzzingPath)
-	createScript(fuzzingPath, targetPoints[i])
+	createScript(fuzzingPath, i)
 
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
-	go cmd.Run()
-	time.Sleep(3 * time.Second)
-	runTimer(fuzzingPath, configData.Timeout)
+	// cmd.Run()
 	go exitAFL(cmd)
+	// time.Sleep(3 * time.Second)
+	go runTimer(fuzzingPath, configData.Timeout)
 	finishFuzz(fuzzingPath)
 
 	output, _ := cmd.CombinedOutput()
@@ -75,7 +75,7 @@ func mkdir(dirName string) {
 	}
 }
 
-func createScript(fuzzingPath string, targetPoint string) {
+func createScript(fuzzingPath string, i int) {
 	scriptPath := fuzzingPath + "/run.sh"
 	file, err := os.Create(scriptPath)
 
@@ -93,12 +93,12 @@ func createScript(fuzzingPath string, targetPoint string) {
 	}
 
 	scriptContent += configData.AFLPath + "afl-fuzz"
-	scriptContent += " -i " + fuzzingPath + "/input/seeds/" + targetPoint
+	scriptContent += " -i " + fuzzingPath + "/input/seeds/"
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
 	scriptContent += configData.TargetBinary
-	scriptContent += targets[0]
+	scriptContent += targets[i]
 
 	_, err = file.WriteString(scriptContent)
 
@@ -191,12 +191,13 @@ func createFuzzStat(fuzzingPath string) {
 
 func createSeed(fuzzingPath string) {
 	var seed string
+	targetPoints = make(map[string]string)
 
 	for i := 0; i < len(fuzzStat.Targets); i++ {
 		targetPoint := strings.ReplaceAll(strings.Split(fuzzStat.Targets[i].TargetPath, "//")[1], "/", "+")
 		dir := fuzzingPath + fmt.Sprintf("/input/seeds/%v", targetPoint)
 
-		targetPoints = append(targetPoints, targetPoint)
+		targetPoints[fuzzStat.Targets[i].TargetPath] = targetPoint
 
 		for j := 0; j < len(fuzzStat.Targets[i].Requests); j++ {
 			req := fuzzStat.Targets[i].Requests[j]
@@ -237,7 +238,7 @@ func createSeed(fuzzingPath string) {
 	}
 }
 
-func finishFuzz(fuzzingPath string) {
+func finishFuzz(fuzzingPath string,) {
 	copyDir := fuzzingPath + "/../results"
 
 	mkdir(copyDir)
