@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"
+	// "github.com/fatih/color"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 
 	fmt.Println("------------------------------------------------------------")
 
-	Login()
+	// Login()
 
 	// fmt.Println("------------------------------------------------------------")
 
@@ -53,7 +53,7 @@ func checkFile(fileName string) bool {
     _, err := os.Stat(fileName)
 
     if os.IsNotExist(err) {
-        color.Yellow("%v File does not exist. Please check your path.\n", fileName)
+        fmt.Printf("%v File does not exist. Please check your path.\n", fileName)
 		panic(err)
 	}
 
