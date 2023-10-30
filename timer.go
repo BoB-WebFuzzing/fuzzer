@@ -9,6 +9,8 @@ import (
 func runTimer(fuzzingPath string, timeout int) {
 	interval := 1 * time.Second
 	var crashes int
+
+	time.Sleep(1 * time.Second)
 	
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
