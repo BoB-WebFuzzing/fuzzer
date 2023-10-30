@@ -8,10 +8,10 @@ import (
 
 func runTimer(fuzzingPath string, targetPoint string, timeout int) {
 	interval := 1 * time.Second
+	crashes := 0
 	
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
-		crashes := 0
 
 		files, err := ioutil.ReadDir(fuzzingPath + "/input/seeds/" + targetPoint)
 
@@ -36,11 +36,6 @@ func runTimer(fuzzingPath string, targetPoint string, timeout int) {
 
 	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
-
-
-
-
-
 }
 
 
