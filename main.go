@@ -34,12 +34,16 @@ func main() {
 
 	// testLogin()
 
-	for i := 0; i < configData.Cores; i++ {
-		initDir(i)
-	}
+
+	// runTimer(120)
+
+
+	// for i := 0; i < configData.Cores; i++ {
+	// 	initDir(i)
+	// }
 
 	// test
-	runAFL("fuzzing-0")
+	runAFL(initDir(0), targetPoints[0])
 }
 
 func usage() {
