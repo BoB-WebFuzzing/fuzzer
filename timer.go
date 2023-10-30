@@ -3,15 +3,17 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os/exec"
+	"syscall"
 	"time"
 )
 
-func runTimer(fuzzingPath string, timeout int) {
+func runTimer(fuzzingPath string, timeout int, c *exec.Cmd) {
 	interval := 1 * time.Second
 	var crashes int
 
 	time.Sleep(1 * time.Second)
-	
+
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
 
@@ -31,16 +33,18 @@ func runTimer(fuzzingPath string, timeout int) {
 		}
 		
 		fmt.Print("\033[K")
-		fmt.Printf("[%ds/%ds %.2f%%] completed", i, timeout, progress)
+		fmt.Printf("  [%ds/%ds %.2f%%] completed", i, timeout, progress)
 		fmt.Printf(" found total \033[32;5;3m%d crashes\033[0m\r", crashes)
 
 		time.Sleep(interval)
 	}
 
+	process := c.Process
+	process.Signal(syscall.SIGINT)
+
 	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
 }
-
 
 func startsWith(str string, prefix string) bool {
 	return len(str) >= len(prefix) && str[:len(prefix)] == prefix
