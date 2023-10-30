@@ -35,6 +35,7 @@ func runAFL(fuzzingPath string, i int) {
 	createScript(fuzzingPath, targetPoints[i])
 
 	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+	go cmd.Run()
 
 	runTimer(fuzzingPath, targetPoints[i], configData.Timeout)
 	go exitAFL(cmd)
