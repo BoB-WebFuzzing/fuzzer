@@ -16,6 +16,8 @@ func runTimer(fuzzingPath string, timeout int) {
 
 	signal.Notify(timerChan, syscall.SIGINT, syscall.SIGTERM)
 
+	time.Sleep(interval)
+
 	for i := 0; i < timeout; i++ {
 		select {
 		case <-timerChan:
@@ -49,7 +51,7 @@ func runTimer(fuzzingPath string, timeout int) {
 
 	termChan <- syscall.SIGTERM
 
-	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
+	fmt.Printf("  [%ds/%ds %.2f%%] completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
 }
 
