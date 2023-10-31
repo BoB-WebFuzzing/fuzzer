@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -39,14 +40,20 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 	for i := 0; i < len(targetPoints); i++ {
 		resetChan = make(chan struct{})
 		targetURL := targetPoints[fuzzStat.Targets[i].TargetPath]
-		
+
 		fmt.Println("Current Fuzzing target :", targetURL)
 
 		createScript(fuzzingPath, i)
 		createSeed(fuzzingPath, i)
 
 		cmd := exec.Command("sh", fuzzingPath + "/run.sh")
-		output, _ := cmd.CombinedOutput()
+		stdout, _ := cmd.StdoutPipe()
+		var outputBuf bytes.Buffer
+		
+		cmd.Start()
+		go io.Copy(&outputBuf, stdout)
+
+		// output, _ := cmd.CombinedOutput()
 
 		go exitFuzzer(cmd)
 		go exitAFL(cmd)
@@ -54,12 +61,14 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 
 		select {
 		case <-resetChan:
+			output := outputBuf.Bytes()
 			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 			finishFuzz(fuzzingPath, i)
 			cleanDir(fuzzingPath + "/input", fuzzerNumber)
 			cleanDir(fuzzingPath + "/output", fuzzerNumber)
 			os.Exit(0)
 		default:
+			output := outputBuf.Bytes()
 			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 			finishFuzz(fuzzingPath, i)
 			cleanDir(fuzzingPath + "/input", fuzzerNumber)
@@ -337,12 +346,12 @@ func createSeed(fuzzingPath string, i int) {
 
 func finishFuzz(fuzzingPath string, i int) {
 	resultDir := fuzzingPath + "/../results/" + targetPoints[fuzzStat.Targets[i].TargetPath]
-	
+
 	err := copyDir(fuzzingPath, resultDir)
 
 	if err != nil {
 		panic(err)
 	}
-	
+
 	mkdir(resultDir)
 }
