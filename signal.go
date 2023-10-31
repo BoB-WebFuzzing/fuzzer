@@ -25,4 +25,6 @@ func exitAFL(c *exec.Cmd) {
 	}
 
 	fmt.Println("\nSIGINT received. Exiting...")
+
+	os.Exit(-1)
 }
