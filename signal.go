@@ -11,6 +11,7 @@ import (
 var termChan chan os.Signal
 var intChan chan os.Signal
 var resetChan chan struct{}
+var timerChan chan os.Signal
 
 func exitAFL(c *exec.Cmd) {
 	signal.Notify(termChan, syscall.SIGTERM)
@@ -26,7 +27,7 @@ func exitAFL(c *exec.Cmd) {
 
 	fmt.Println("\nSIGTERM received. Exiting...")
 
-	close(resetChan)
+	resetChan <- struct{}{}
 }
 
 func exitFuzzer(c *exec.Cmd) {
@@ -43,7 +44,5 @@ func exitFuzzer(c *exec.Cmd) {
 
 	fmt.Println("\nSIGINT received. Exiting...")
 
-	close(resetChan)
-
-	os.Exit(-1)
+	resetChan <- struct{}{}
 }
