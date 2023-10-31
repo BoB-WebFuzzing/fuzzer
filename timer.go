@@ -36,7 +36,7 @@ func runTimer(fuzzingPath string, timeout int) {
 		time.Sleep(interval)
 	}
 
-	interrupt <- syscall.SIGTERM
+	termChan <- syscall.SIGTERM
 
 	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
