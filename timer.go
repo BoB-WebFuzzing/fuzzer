@@ -3,15 +3,13 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	// "syscall"
+	"syscall"
 	"time"
 )
 
 func runTimer(fuzzingPath string, timeout int) {
 	interval := 1 * time.Second
 	var crashes int
-
-	// time.Sleep(interval)
 
 	for i := 0; i < timeout; i++ {
 		progress := float64(i) / float64(timeout) * 100
@@ -38,7 +36,7 @@ func runTimer(fuzzingPath string, timeout int) {
 		time.Sleep(interval)
 	}
 
-	// interrupt <- syscall.SIGINT
+	interrupt <- syscall.SIGTERM
 
 	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
