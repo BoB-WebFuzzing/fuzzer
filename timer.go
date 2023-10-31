@@ -3,12 +3,11 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"os/exec"
 	"syscall"
 	"time"
 )
 
-func runTimer(fuzzingPath string, timeout int, c *exec.Cmd) {
+func runTimer(fuzzingPath string, timeout int) {
 	interval := 1 * time.Second
 	var crashes int
 
@@ -39,8 +38,7 @@ func runTimer(fuzzingPath string, timeout int, c *exec.Cmd) {
 		time.Sleep(interval)
 	}
 
-	process := c.Process
-	process.Signal(syscall.SIGINT)
+	interrupt <- syscall.SIGINT
 
 	fmt.Printf("%ds/%ds %.2f%% completed\n", timeout, timeout, 100.0)
 	fmt.Println("Task completed!")
