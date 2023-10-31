@@ -20,6 +20,9 @@ func main() {
 		(*request).parseJSON(&requestData, "json/request_data.json")
 	}
 
+	termChan = make(chan os.Signal, 1)
+	intChan = make(chan os.Signal, 1)
+
 	// printConfig()
 
 	fmt.Println("------------------------------------------------------------")
@@ -34,16 +37,9 @@ func main() {
 
 	// testLogin()
 
-
-	// runTimer(120)
-
-
-	// for i := 0; i < configData.Cores; i++ {
-	// 	initDir(i)
-	// }
-
 	// test
 	runAFL(initDir(0), 0)
+	fmt.Println(targetPoints)
 }
 
 func usage() {
