@@ -45,12 +45,15 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		createSeed(fuzzingPath, i)
 
 		cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+		// out , _ := cmd.CombinedOutput()
+		// fmt.Println("Executing command:", string(out))
+
 	
 		// cmd.Run()
 		go exitAFL(cmd)
-		go runTimer(fuzzingPath, configData.Timeout)
-		
 		output, _ := cmd.CombinedOutput()
+		runTimer(fuzzingPath, configData.Timeout)
+		
 		
 		os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 		finishFuzz(fuzzingPath, i)
@@ -183,7 +186,7 @@ func createScript(fuzzingPath string, i int) {
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
 	scriptContent += configData.TargetBinary
-	scriptContent += targets[i]
+	scriptContent += fuzzStat.Targets[i].TargetPath
 
 	_, err = file.WriteString(scriptContent)
 
