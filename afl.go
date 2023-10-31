@@ -52,12 +52,19 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		go exitAFL(cmd)
 		runTimer(fuzzingPath, configData.Timeout)
 
-		<-resetChan
-
-		os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
-		finishFuzz(fuzzingPath, i)
-		cleanDir(fuzzingPath + "/input", fuzzerNumber)
-		cleanDir(fuzzingPath + "/output", fuzzerNumber)
+		select {
+		case <-resetChan:
+			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
+			finishFuzz(fuzzingPath, i)
+			cleanDir(fuzzingPath + "/input", fuzzerNumber)
+			cleanDir(fuzzingPath + "/output", fuzzerNumber)
+			os.Exit(0)
+		default:
+			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
+			finishFuzz(fuzzingPath, i)
+			cleanDir(fuzzingPath + "/input", fuzzerNumber)
+			cleanDir(fuzzingPath + "/output", fuzzerNumber)
+		}
 	}
 }
 
