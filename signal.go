@@ -22,7 +22,7 @@ func exitAFL(c *exec.Cmd) {
 	err := process.Signal(syscall.SIGINT)
 
 	if err != nil {
-		fmt.Println("\nFailed to send SIGINT:\n\t", err)
+		panic(err)
 	}
 
 	fmt.Println("\nSIGTERM received. Exiting...")
@@ -39,7 +39,7 @@ func exitFuzzer(c *exec.Cmd) {
 	err := process.Signal(syscall.SIGINT)
 
 	if err != nil {
-		fmt.Println("\nFailed to send SIGINT:\n\t", err)
+		panic(err)
 	}
 
 	fmt.Println("\nSIGINT received. Exiting...")
