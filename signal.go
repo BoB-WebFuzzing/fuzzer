@@ -8,14 +8,14 @@ import (
 	"syscall"
 )
 
-var interrupt chan os.Signal
+var termChan chan os.Signal
+var intChan chan os.Signal
+var resetChan chan struct{}
 
 func exitAFL(c *exec.Cmd) {
-	interrupt = make(chan os.Signal, 1)
+	signal.Notify(termChan, syscall.SIGTERM)
 
-	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
-
-	<-interrupt
+	<-termChan
 
 	process := c.Process
 	err := process.Signal(syscall.SIGINT)
@@ -25,14 +25,14 @@ func exitAFL(c *exec.Cmd) {
 	}
 
 	fmt.Println("\nSIGTERM received. Exiting...")
+
+	close(resetChan)
 }
 
 func exitFuzzer(c *exec.Cmd) {
-	interrupt = make(chan os.Signal, 1)
+	signal.Notify(intChan, os.Interrupt, syscall.SIGINT)
 
-	signal.Notify(interrupt, syscall.SIGINT)
-
-	<-interrupt
+	<-intChan
 
 	process := c.Process
 	err := process.Signal(syscall.SIGINT)
@@ -42,6 +42,8 @@ func exitFuzzer(c *exec.Cmd) {
 	}
 
 	fmt.Println("\nSIGINT received. Exiting...")
+
+	close(resetChan)
 
 	os.Exit(-1)
 }
