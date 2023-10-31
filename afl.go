@@ -35,26 +35,25 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 	createDict(fuzzingPath)
 	createFuzzStat(fuzzingPath)
 	initPoints(fuzzingPath)
-	
+
 	for i := 0; i < len(targetPoints); i++ {
+		resetChan = make(chan struct{})
 		targetURL := targetPoints[fuzzStat.Targets[i].TargetPath]
 		
 		fmt.Println("Current Fuzzing target :", targetURL)
-		
+
 		createScript(fuzzingPath, i)
 		createSeed(fuzzingPath, i)
 
 		cmd := exec.Command("sh", fuzzingPath + "/run.sh")
-		// out , _ := cmd.CombinedOutput()
-		// fmt.Println("Executing command:", string(out))
-
-	
-		// cmd.Run()
-		go exitAFL(cmd)
 		output, _ := cmd.CombinedOutput()
+
+		go exitFuzzer(cmd)
+		go exitAFL(cmd)
 		runTimer(fuzzingPath, configData.Timeout)
-		
-		
+
+		<-resetChan
+
 		os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 		finishFuzz(fuzzingPath, i)
 		cleanDir(fuzzingPath + "/input", fuzzerNumber)
