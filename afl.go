@@ -3,15 +3,18 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/url"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 )
 
 var fuzzStat fuzzCampaignStatus
 var targetPoints map[string]string
+
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -28,23 +31,32 @@ type fuzzCampaignStatus struct {
 	Targets			[]fuzzTarget	`json:"targets"`
 }
 
-func runAFL(fuzzingPath string, i int) {
+func runAFL(fuzzingPath string, fuzzerNumber int) {
 	createDict(fuzzingPath)
 	createFuzzStat(fuzzingPath)
-	createSeed(fuzzingPath)
-	createScript(fuzzingPath, i)
+	initPoints(fuzzingPath)
+	
+	for i := 0; i < len(targetPoints); i++ {
+		targetURL := targetPoints[fuzzStat.Targets[i].TargetPath]
+		
+		fmt.Println("Current Fuzzing target :", targetURL)
+		
+		createScript(fuzzingPath, i)
+		createSeed(fuzzingPath, i)
 
-	cmd := exec.Command("sh", fuzzingPath + "/run.sh")
-
-	// cmd.Run()
-	go exitAFL(cmd)
-	// time.Sleep(3 * time.Second)
-	go runTimer(fuzzingPath, configData.Timeout, cmd)
-	finishFuzz(fuzzingPath)
-
-	output, _ := cmd.CombinedOutput()
-
-	os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
+		cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+	
+		// cmd.Run()
+		go exitAFL(cmd)
+		go runTimer(fuzzingPath, configData.Timeout)
+		
+		output, _ := cmd.CombinedOutput()
+		
+		os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
+		finishFuzz(fuzzingPath, i)
+		cleanDir(fuzzingPath + "/input", fuzzerNumber)
+		cleanDir(fuzzingPath + "/output", fuzzerNumber)
+	}
 }
 
 func initDir(i int) string {
@@ -59,6 +71,79 @@ func initDir(i int) string {
 	mkdir(outputDir)
 
 	return fuzzingDir
+}
+
+func copyDir(src string, dst string) error {
+	err := os.MkdirAll(dst, os.ModePerm)
+
+	if err != nil {
+		return err
+	}
+
+	entries, err := os.ReadDir(src)
+	
+	if err != nil {
+		return err
+	}
+
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+
+		if entry.IsDir() {
+			if err := copyDir(srcPath, dstPath); err != nil {
+				return err
+			}
+		} else {
+			srcFile, err := os.Open(srcPath)
+
+			if err != nil {
+				return err
+			}
+
+			defer srcFile.Close()
+
+			dstFile, err := os.Create(dstPath)
+
+			if err != nil {
+				return err
+			}
+
+			defer dstFile.Close()
+
+			if _, err := io.Copy(dstFile, srcFile); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func cleanDir(dir string, i int) {
+	entries, err := os.ReadDir(dir)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, entry := range entries {
+		if !(entry.Name() == "dict.txt" || entry.Name() == "fuzz_stat.json") {
+			filePath := filepath.Join(dir, entry.Name())
+
+			if entry.IsDir() {
+				err := os.RemoveAll(filePath)
+				if err != nil {
+					panic(err)
+				}
+			} else {
+				err := os.Remove(filePath)
+				if err != nil {
+					panic(err)
+				}
+			}
+		}
+	}
 }
 
 func mkdir(dirName string) {
@@ -93,7 +178,7 @@ func createScript(fuzzingPath string, i int) {
 	}
 
 	scriptContent += configData.AFLPath + "afl-fuzz"
-	scriptContent += " -i " + fuzzingPath + "/input/seeds/" + strings.ReplaceAll(strings.Split(targets[i], "//")[1], "/", "+")
+	scriptContent += " -i " + fuzzingPath + "/input/seeds/"// + strings.ReplaceAll(strings.Split(targets[i], "//")[1], "/", "+")
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
@@ -181,7 +266,7 @@ func createFuzzStat(fuzzingPath string) {
 	}
 
 	defer file.Close()
-	
+
 	_, err = file.Write(data)
 
 	if err != nil {
@@ -189,57 +274,66 @@ func createFuzzStat(fuzzingPath string) {
 	}
 }
 
-func createSeed(fuzzingPath string) {
-	var seed string
+func initPoints(fuzzingPath string) {
 	targetPoints = make(map[string]string)
 
 	for i := 0; i < len(fuzzStat.Targets); i++ {
 		targetPoint := strings.ReplaceAll(strings.Split(fuzzStat.Targets[i].TargetPath, "//")[1], "/", "+")
-		dir := fuzzingPath + fmt.Sprintf("/input/seeds/%v", targetPoint)
-
 		targetPoints[fuzzStat.Targets[i].TargetPath] = targetPoint
+	}
+}
 
-		for j := 0; j < len(fuzzStat.Targets[i].Requests); j++ {
-			req := fuzzStat.Targets[i].Requests[j]
-			var getQuery string
-			var postData string
-			var headers string
+func createSeed(fuzzingPath string, i int) {
+	var seed string
 
-			if strings.Split(req, " ")[0] == "GET" {
-				if strings.Contains(req, "?") {
-					getQuery = strings.Split(strings.Split(req, "?")[1], " ")[0]
-				}
-			} else if strings.Split(req, " ")[0] == "POST" {
-				postData = requestData.RequestsFound[req].PostData
+	dir := fuzzingPath + "/input/seeds"
+
+	for j := 0; j < len(fuzzStat.Targets[i].Requests); j++ {
+		req := fuzzStat.Targets[i].Requests[j]
+		var getQuery string
+		var postData string
+		var headers string
+
+		if strings.Split(req, " ")[0] == "GET" {
+			if strings.Contains(req, "?") {
+				getQuery = strings.Split(strings.Split(req, "?")[1], " ")[0]
 			}
+		} else if strings.Split(req, " ")[0] == "POST" {
+			postData = requestData.RequestsFound[req].PostData
+		}
 
-			for key, value := range requestData.RequestsFound[req].Headers {
-				headers += fmt.Sprintf("%v:%v\n", key, value)
-			}
+		for key, value := range requestData.RequestsFound[req].Headers {
+			headers += fmt.Sprintf("%v:%v\n", key, value)
+		}
 
-			mkdir(dir)
+		mkdir(dir)
 
-			seed = fmt.Sprintf("%v\x00%v\x00%v", getQuery, postData, headers)
+		seed = fmt.Sprintf("%v\x00%v\x00%v", getQuery, postData, headers)
 
-			file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
+		file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
 
-			if err != nil {
-				panic(err)
-			}
+		if err != nil {
+			panic(err)
+		}
+
+		defer file.Close()
 		
-			defer file.Close()
-			
-			_, err = file.Write([]byte(seed))
-		
-			if err != nil {
-				panic(err)
-			}
+		_, err = file.Write([]byte(seed))
+
+		if err != nil {
+			panic(err)
 		}
 	}
 }
 
-func finishFuzz(fuzzingPath string,) {
-	copyDir := fuzzingPath + "/../results"
+func finishFuzz(fuzzingPath string, i int) {
+	resultDir := fuzzingPath + "/../results/" + targetPoints[fuzzStat.Targets[i].TargetPath]
+	
+	err := copyDir(fuzzingPath, resultDir)
 
-	mkdir(copyDir)
+	if err != nil {
+		panic(err)
+	}
+	
+	mkdir(resultDir)
 }
