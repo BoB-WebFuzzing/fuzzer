@@ -8,8 +8,10 @@ import (
 	"syscall"
 )
 
+var interrupt chan os.Signal
+
 func exitAFL(c *exec.Cmd) {
-	interrupt := make(chan os.Signal, 1)
+	interrupt = make(chan os.Signal, 1)
 
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
