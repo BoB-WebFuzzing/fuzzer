@@ -327,7 +327,7 @@ func createSeed(fuzzingPath string, i int) {
 
 		mkdir(dir)
 
-		seed = fmt.Sprintf("%v\x00%v\x00%v", getQuery, postData, headers)
+		seed = fmt.Sprintf("\x00%v\x00%v\x00%v", getQuery, postData, headers)
 
 		file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
 
