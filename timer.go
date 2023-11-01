@@ -16,7 +16,7 @@ func runTimer(fuzzingPath string, timeout int) {
 
 	signal.Notify(timerChan, syscall.SIGINT, syscall.SIGTERM)
 
-	time.Sleep(interval / 100)
+	time.Sleep(interval / 10)
 
 	for i := 0; i < timeout; i++ {
 		select {
@@ -24,7 +24,7 @@ func runTimer(fuzzingPath string, timeout int) {
 			fmt.Println("\nInterrupt signal received. Exiting...")
 			return
 		default:
-			progress := float64(i) / float64(timeout) * 10
+			progress := float64(i) / float64(timeout) * 100
 
 			files, err := ioutil.ReadDir(fuzzingPath + "/output/default/crashes")
 
