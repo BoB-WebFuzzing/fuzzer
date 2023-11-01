@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var sessid string
@@ -18,7 +19,7 @@ func Login() {
 	if loginData.Port < 0 {
 		url = loginData.URL
 	} else {
-		url = loginData.URL+":"+strconv.Itoa(loginData.Port)
+		url = strings.ReplaceAll(loginData.URL, "{PORT}", strconv.Itoa(loginData.Port))
 	}
 
 	req, err := http.NewRequest(loginData.Method, url, bytes.NewBufferString(loginData.PostData))
@@ -27,7 +28,7 @@ func Login() {
 		panic(err)
 	}
 
-	for key, value := range loginData.PositiveHeaders {
+	for key, value := range loginData.Headers {
 		req.Header.Add(key, value)
 	}
 
