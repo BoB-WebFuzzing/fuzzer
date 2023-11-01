@@ -24,7 +24,7 @@ func runTimer(fuzzingPath string, timeout int) {
 			fmt.Println("\nInterrupt signal received. Exiting...")
 			return
 		default:
-			progress := float64(i) / float64(timeout) * 100
+			progress := float64(i) / float64(timeout) * 10
 
 			files, err := ioutil.ReadDir(fuzzingPath + "/output/default/crashes")
 
