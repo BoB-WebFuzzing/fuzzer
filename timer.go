@@ -16,7 +16,7 @@ func runTimer(fuzzingPath string, timeout int) {
 
 	signal.Notify(timerChan, syscall.SIGINT, syscall.SIGTERM)
 
-	time.Sleep(interval)
+	time.Sleep(interval / 100)
 
 	for i := 0; i < timeout; i++ {
 		select {
