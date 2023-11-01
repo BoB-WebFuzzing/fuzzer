@@ -26,7 +26,7 @@ type config struct {
 		Port				int					`json:"port"`
 		PostData			string				`json:"postData"`
 		GetData				string				`json:"getData"`
-		PositiveHeaders		map[string]string	`json:"positiveHeaders"`
+		Headers				map[string]string	`json:"headers"`
 		PositiveBody		string				`json:"positiveBody"`
 		Method				string				`json:"method"`
 		LoginSessionCookie	string				`json:"loginSessionCookie"`
@@ -63,7 +63,7 @@ func printConfig() {
 	fmt.Printf("	%-20v %v\n", "Port:", configData.Login.Port)
 	fmt.Printf("	%-20v %v\n", "PostData:", configData.Login.PostData)
 	fmt.Printf("	%-20v %v\n", "GetData:", configData.Login.GetData)
-	fmt.Printf("	%-20v %v\n", "PositiveHeaders:", configData.Login.PositiveHeaders)
+	fmt.Printf("	%-20v %v\n", "Headers:", configData.Login.Headers)
 	fmt.Printf("	%-20v %v\n", "PositiveBody:", configData.Login.PositiveBody)
 	fmt.Printf("	%-20v %v\n", "Method:", configData.Login.Method)
 	fmt.Printf("	%-20v %v\n", "LoginSessionCookie:", configData.Login.LoginSessionCookie)
