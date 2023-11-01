@@ -15,7 +15,7 @@ import (
 
 var fuzzStat fuzzCampaignStatus
 var targetPoints map[string]string
-
+var script []string
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -46,14 +46,13 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		createScript(fuzzingPath, i)
 		createSeed(fuzzingPath, i)
 
-		cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+		// cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+		cmd := exec.Command(script[1], script[2:]...)
 		stdout, _ := cmd.StdoutPipe()
 		var outputBuf bytes.Buffer
 		
 		cmd.Start()
 		go io.Copy(&outputBuf, stdout)
-
-		// output, _ := cmd.CombinedOutput()
 
 		go exitFuzzer(cmd)
 		go exitAFL(cmd)
@@ -202,6 +201,8 @@ func createScript(fuzzingPath string, i int) {
 	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
 	scriptContent += configData.TargetBinary
 	scriptContent += fuzzStat.Targets[i].TargetPath
+
+	script = strings.Fields(scriptContent)
 
 	_, err = file.WriteString(scriptContent)
 
