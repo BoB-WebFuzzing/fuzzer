@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"regexp"
 	"strconv"
 )
 
@@ -45,7 +44,7 @@ func Login() {
 	for _, cookie := range cookies {
 		fmt.Println(cookie.Name, ":", cookie.Value)
 
-		if matched, _ := regexp.MatchString(`(?i)sess`, cookie.Name); matched {
+		if cookie.Name == configData.Login.LoginSessionCookie {
 			fmt.Println("	Cookie Name:", cookie.Name)
 			fmt.Println("	Cookie Value:", cookie.Value)
 
