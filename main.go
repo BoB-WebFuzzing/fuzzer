@@ -13,11 +13,11 @@ func main() {
 	}
 
 	if checkFile(os.Args[1]) {
-		(*config).parseJSON(&configData, "json/config.json")
+		(*ConfigData).parseJSON(&configData, os.Args[1])
 	}
 
 	if checkFile(os.Args[2]) {
-		(*request).parseJSON(&requestData, "json/request_data.json")
+		(*RequestData).parseJSON(&requestData, os.Args[2])
 	}
 
 	termChan = make(chan os.Signal, 1)
@@ -39,7 +39,7 @@ func main() {
 
 	// test
 	runAFL(initDir(0), 0)
-	fmt.Println(targetPoints)
+	// fmt.Println(targetPoints)
 }
 
 func usage() {
