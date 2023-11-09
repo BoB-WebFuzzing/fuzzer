@@ -7,9 +7,9 @@ import (
 	"os"
 )
 
-var configData config
+var configData ConfigData
 
-type config struct {
+type ConfigData struct {
 	Testname		string	`json:"testname"`
 	AFLPath			string	`json:"afl_path"`
 	TargetBinary    string	`json:"target_binary"`
@@ -33,7 +33,7 @@ type config struct {
 	}	`json:"login"`
 }
 
-func (c *config) parseJSON(fileName string) {
+func (c *ConfigData) parseJSON(fileName string) {
 	data, err := os.Open(fileName)
 
 	if err != nil {
