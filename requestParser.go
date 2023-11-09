@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var requestData request
+var requestData RequestData
 
 type RequestInfo struct {
 	ID					int						`json:"_id"`
@@ -28,12 +28,12 @@ type RequestInfo struct {
 
 type InputSet []string
 
-type request struct {
+type RequestData struct {
 	RequestsFound map[string]RequestInfo `json:"requestsFound"`
 	InputSet      InputSet               `json:"inputSet"`
 }
 
-func (r *request) parseJSON(fileName string) {
+func (r *RequestData) parseJSON(fileName string) {
 	data, err := os.Open(fileName)
 
 	if err != nil {
