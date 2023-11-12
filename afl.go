@@ -45,13 +45,18 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 
 		createScript(fuzzingPath, i)
 		createSeed(fuzzingPath, i)
-
+		
 		u, _ := url.Parse(fuzzStat.Targets[i].TargetPath)
-		os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
-		fmt.Println("SCRIPT_FILENAME : " + "/app" + u.Path)
+                os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
+                fmt.Println("SCRIPT_FILENAME" + "/app" + u.Path)
 
-		// cmd := exec.Command("sh", fuzzingPath + "/run.sh")
-		cmd := exec.Command(script[1], script[2:]...)
+                // cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+
+                var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&"}
+                slc = append(slc, script[1:]...)
+                fmt.Println(strings.Join(slc," "))
+		
+                cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
 		stdout, _ := cmd.StdoutPipe()
 		var outputBuf bytes.Buffer
 		
