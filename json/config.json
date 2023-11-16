@@ -1,7 +1,7 @@
 {
     "testname": "test",
-    "afl_path": "/afl",
-    "target_binary": "/httpreqr --json --url ",
+    "afl_path": "/afl/",
+    "target_binary": "/usr/local/bin/php-cgi ",
     "base_url": "http://localhost:@@PORT_INCREMENT@@/",
     "base_port": 3000,
     "timeout" : 60,
