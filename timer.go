@@ -26,7 +26,7 @@ func runTimer(fuzzingPath string, timeout int) {
 		default:
 			progress := float64(i) / float64(timeout) * 100
 
-			files, err := ioutil.ReadDir(fuzzingPath + "/output/default/crashes")
+			files, err := ioutil.ReadDir(fuzzingPath + "/output/crashes")
 
 			if err != nil {
 				panic(err)
