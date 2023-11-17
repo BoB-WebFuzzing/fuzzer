@@ -52,7 +52,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 
                 // cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
-                var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&"}
+                var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&", "export", "AFL_PRELOAD=/wclibs/hook_recv.so", "&&"}
                 slc = append(slc, script[1:]...)
                 fmt.Println(strings.Join(slc," "))
 		
@@ -336,7 +336,7 @@ func createSeed(fuzzingPath string, i int) {
 
 		mkdir(dir)
 
-		seed = fmt.Sprintf("\x00%v\x00%v", getQuery, postData)
+		seed = fmt.Sprintf("\x00%v\x00%v\x00", getQuery, postData)
 
 		file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
 
