@@ -13,7 +13,7 @@ type RequestInfo struct {
 	// ID					int						`json:"_id"`
 	URLString			string					`json:"url"`
 	Method				string					`json:"method"`
-	PostData			string					`json:data"`
+	PostData			string					`json:"data"`
 	Headers				map[string]string		`json:"headers"`
 	// ResourceType		string					`json:"_resourceType"`
 	// MultipleParamKeys	map[string]interface{}	`json:"multipleParamKeys"`
