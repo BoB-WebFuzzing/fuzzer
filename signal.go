@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -25,7 +25,7 @@ func exitAFL(c *exec.Cmd) {
 		panic(err)
 	}
 
-	fmt.Println("\nSIGTERM received. Exiting...")
+	// fmt.Println("SIGTERM received. Exiting...\n")
 
 	resetChan <- struct{}{}
 }
@@ -42,7 +42,7 @@ func exitFuzzer(c *exec.Cmd) {
 		panic(err)
 	}
 
-	fmt.Println("\nSIGINT received. Exiting...")
+	// fmt.Println("SIGINT received. Exiting...\n")
 
 	resetChan <- struct{}{}
 }
