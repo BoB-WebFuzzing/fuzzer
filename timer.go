@@ -14,6 +14,7 @@ func runTimer(fuzzingPath string, timeout int) {
 	timerChan := make(chan os.Signal, 1)
 	interval := 1 * time.Second
 	var crashes int
+	var paths int
 
 	signal.Notify(timerChan, syscall.SIGINT, syscall.SIGTERM)
 
@@ -43,6 +44,21 @@ func runTimer(fuzzingPath string, timeout int) {
 					}
 				}
 			}
+
+			files, err = ioutil.ReadDir(fuzzingPath + "/output/queue")
+
+			if err != nil {
+				panic(err)
+			}
+
+			paths = 0
+			for _, file := range files {
+				if !file.IsDir() {
+					if startsWith(file.Name(), "id:") {
+						paths++
+					}
+				}
+			}
 			
 			fmt.Print("\033[K")
 
@@ -54,7 +70,7 @@ func runTimer(fuzzingPath string, timeout int) {
 				fmt.Printf("  [\033[33m%v>%v\033[0m][%ds/%ds %.2f%%] completed", bar, spaces, i, timeout, progress)
 			}
 
-			fmt.Printf(" found total \033[32;5;3m%d crashes\033[0m\r", crashes)
+			fmt.Printf(" found %d paths and total \033[32;5;3m%d crashes\033[0m\r", paths, crashes)
 
 			time.Sleep(interval)
 		}
