@@ -72,15 +72,15 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 			output := outputBuf.Bytes()
 			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 			finishFuzz(fuzzingPath, i)
-			cleanDir(fuzzingPath + "/input", fuzzerNumber)
-			cleanDir(fuzzingPath + "/output", fuzzerNumber)
+			cleanDir(fuzzingPath + "/input")
+			cleanDir(fuzzingPath + "/output")
 			os.Exit(0)
 		default:
 			output := outputBuf.Bytes()
 			os.WriteFile(fuzzingPath + "/output/fuzzer.log", output, 0644)
 			finishFuzz(fuzzingPath, i)
-			cleanDir(fuzzingPath + "/input", fuzzerNumber)
-			cleanDir(fuzzingPath + "/output", fuzzerNumber)
+			cleanDir(fuzzingPath + "/input")
+			cleanDir(fuzzingPath + "/output")
 		}
 	}
 }
@@ -146,7 +146,7 @@ func copyDir(src string, dst string) error {
 	return nil
 }
 
-func cleanDir(dir string, i int) {
+func cleanDir(dir string) {
 	entries, err := os.ReadDir(dir)
 
 	if err != nil {
@@ -197,6 +197,7 @@ func createScript(fuzzingPath string, i int) {
 	defer file.Close()
 
 	var targets []string
+	var scriptContent string
 	// scriptContent := "#!/bin/sh\n\n"
 
 	for key := range requestData.RequestsFound {
