@@ -47,7 +47,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		createSeed(fuzzingPath, i)
 		
 		u, _ := url.Parse(fuzzStat.Targets[i].TargetPath)
-                os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
+		        os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
                 fmt.Println("SCRIPT_FILENAME" + "/app" + u.Path)
 
                 // cmd := exec.Command("sh", fuzzingPath + "/run.sh")
@@ -56,7 +56,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
                 slc = append(slc, script[1:]...)
                 fmt.Println(strings.Join(slc," "))
 		
-                cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
+		        cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
 		stdout, _ := cmd.StdoutPipe()
 		var outputBuf bytes.Buffer
 		
@@ -197,18 +197,18 @@ func createScript(fuzzingPath string, i int) {
 	defer file.Close()
 
 	var targets []string
-	scriptContent := "#!/bin/sh\n\n"
+	// scriptContent := "#!/bin/sh\n\n"
 
 	for key := range requestData.RequestsFound {
 		targets = append(targets, strings.Split(key, " ")[1])
 	}
 
-	scriptContent += configData.AFLPath + "afl-fuzz"
+	scriptContent += configData.AFLPath + "/afl-fuzz"
 	scriptContent += " -i " + fuzzingPath + "/input/seeds/"// + strings.ReplaceAll(strings.Split(targets[i], "//")[1], "/", "+")
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
-	scriptContent += " -x " + fuzzingPath + "/input/dict.txt -- "
-	scriptContent += configData.TargetBinary
+	scriptContent += " -x " + fuzzingPath + "/input/dict.txt"
+	scriptContent += " -- " + configData.TargetBinary
 	scriptContent += fuzzStat.Targets[i].TargetPath
 
 	script = strings.Fields(scriptContent)
