@@ -47,16 +47,17 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		createSeed(fuzzingPath, i)
 		
 		u, _ := url.Parse(fuzzStat.Targets[i].TargetPath)
-		        os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
-                fmt.Println("SCRIPT_FILENAME" + "/app" + u.Path)
+		os.Setenv("SCRIPT_FILENAME", "/app" + u.Path)
+		fmt.Println("SCRIPT_FILENAME" + "/app" + u.Path)
 
-                // cmd := exec.Command("sh", fuzzingPath + "/run.sh")
+		// cmd := exec.Command("sh", fuzzingPath + "/run.sh")
 
-                var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&", "export", "AFL_PRELOAD=/wclibs/hook_recv.so", "&&"}
-                slc = append(slc, script[1:]...)
-                fmt.Println(strings.Join(slc," "))
+		var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&", "export", "AFL_PRELOAD=/wclibs/hook_recv.so", "&&"}
+		slc = append(slc, script[1:]...)
 		
-		        cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
+		fmt.Println(strings.Join(slc," "))
+
+		cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
 		stdout, _ := cmd.StdoutPipe()
 		var outputBuf bytes.Buffer
 		
