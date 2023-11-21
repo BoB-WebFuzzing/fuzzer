@@ -1,9 +1,9 @@
 {
     "testname": "test",
-    "afl_path": "/afl/",
+    "afl_path": "/usr/local/bin",
     "target_binary": "/usr/local/bin/php-cgi ",
     "base_url": "http://localhost:@@PORT_INCREMENT@@/",
-    "base_port": 3000,
+    "base_port": 80,
     "timeout" : 60,
     "ld_library_path": "/lib",
     "ld_preload": "/lib/hook_recv.so",
