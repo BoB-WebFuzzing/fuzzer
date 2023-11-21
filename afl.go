@@ -41,7 +41,8 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		resetChan = make(chan struct{})
 		targetURL := targetPoints[fuzzStat.Targets[i].TargetPath]
 
-		fmt.Println("Current Fuzzing target :", targetURL)
+		// fmt.Println("Method : 				  ", )
+		fmt.Println("Current Fuzzing target : ", targetURL)
 
 		createScript(fuzzingPath, i)
 		createSeed(fuzzingPath, i)
@@ -54,7 +55,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 
 		var slc = []string{"export", "SCRIPT_FILENAME=" + "/app" + u.Path, "&&", "export", "AFL_PRELOAD=/wclibs/hook_recv.so", "&&"}
 		slc = append(slc, script[1:]...)
-		
+
 		fmt.Println(strings.Join(slc," "))
 
 		cmd := exec.Command("bash", "-c",  strings.Join(slc," "))
@@ -198,8 +199,8 @@ func createScript(fuzzingPath string, i int) {
 	defer file.Close()
 
 	var targets []string
-	var scriptContent string
-	// scriptContent := "#!/bin/sh\n\n"
+	// var scriptContent string
+	scriptContent := "#!/bin/sh\n\n"
 
 	for key := range requestData.RequestsFound {
 		targets = append(targets, strings.Split(key, " ")[1])
