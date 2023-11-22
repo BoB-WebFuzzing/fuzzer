@@ -39,7 +39,7 @@ func runTimer(fuzzingPath string, timeout int) {
 			for _, file := range files {
 				crashes = 0
 				if !file.IsDir() {
-					if startsWith(file.Name(), "id:") {
+					if startsWith(file.Name(), "vuln:") {
 						crashes++
 					}
 				}
