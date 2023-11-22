@@ -79,7 +79,7 @@ func runTimer(fuzzingPath string, timeout int) {
 	termChan <- syscall.SIGTERM
 
 	fmt.Printf("  [\033[32m==============================>\033[0m][%ds/%ds %.2f%%] completed\n", timeout, timeout, 100.0)
-	fmt.Println("Task completed!")
+	fmt.Println("Task completed!\n")
 }
 
 func startsWith(str string, prefix string) bool {
