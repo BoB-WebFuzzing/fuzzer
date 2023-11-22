@@ -49,7 +49,7 @@ func Login() {
 			fmt.Println("	Cookie Name:", cookie.Name)
 			fmt.Println("	Cookie Value:", cookie.Value)
 
-			os.Setenv("LOGIN_COOKIE", cookie.Name + "=" + cookie.Value)
+			os.Setenv("LOGIN_COOKIE", cookie.Name + "=" + cookie.Value + "; checkFuzz=true")
 
 			sessid = cookie.Value
 		}
