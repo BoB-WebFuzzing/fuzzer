@@ -72,7 +72,7 @@ func runTimer(fuzzingPath string, timeout int) {
 				fmt.Printf("  [\033[33m%v>%v\033[0m][%ds/%ds %.2f%%] completed", bar, spaces, i, timeout, progress)
 			}
 
-			fmt.Printf(" found %d paths and total \033[32;5;3m%d crashes \033[32;5;3m%v\033[0m\r", paths, crashes, vuln)
+			fmt.Printf(" found %d paths and total \033[32;5;3m%d crashes \033[31m%v\033[0m\r", paths, crashes, vuln)
 
 			time.Sleep(interval)
 		}
