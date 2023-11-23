@@ -61,7 +61,7 @@ func runTimer(fuzzingPath string, timeout int) {
 					}
 				}
 			}
-			
+
 			fmt.Print("\033[K")
 
 			if progress < 33 {
@@ -74,13 +74,21 @@ func runTimer(fuzzingPath string, timeout int) {
 
 			fmt.Printf(" found %d paths and total \033[32;5;3m%d crashes \033[31m%v\033[0m\r", paths, crashes, vuln)
 
+			if (configData.FirstCrash == true) && (1 <= crashes) {
+				goto FIRSTCRASH
+			}
+
 			time.Sleep(interval)
 		}
 	}
+	
+	fmt.Printf("  [\033[32m==============================>\033[0m][%ds/%ds %.2f%%] completed", timeout, timeout, 100.0)
+
+	FIRSTCRASH:
 
 	termChan <- syscall.SIGTERM
 
-	fmt.Printf("  [\033[32m==============================>\033[0m][%ds/%ds %.2f%%] completed\n", timeout, timeout, 100.0)
+	fmt.Printf("\n")
 	fmt.Println("Task completed!\n")
 }
 
