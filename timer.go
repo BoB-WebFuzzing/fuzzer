@@ -23,7 +23,7 @@ func runTimer(fuzzingPath string, timeout int) {
 	time.Sleep(interval)
 
 	for i := 0; i < timeout; i++ {
-		cmd := exec.Command("node", "bot.js", URL)
+		cmd := exec.Command("node", "bot.js", targetURL)
 		cmd.Start()
 
 		select {
