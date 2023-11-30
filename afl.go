@@ -16,6 +16,7 @@ import (
 var fuzzStat fuzzCampaignStatus
 var targetPoints map[string]string
 var script []string
+var targetURL string
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -40,7 +41,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 	for i := 0; i < len(targetPoints); i++ {
 		resetChan = make(chan struct{})
 		// targetURL := targetPoints[fuzzStat.Targets[i].TargetPath]
-		targetURL := fuzzStat.Targets[i].TargetPath
+		targetURL = fuzzStat.Targets[i].TargetPath
 
 		// fmt.Println("Method : 				  ", )
 		fmt.Println("Current Fuzzing target :", targetURL)
@@ -69,9 +70,6 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		go exitFuzzer(cmd)
 		go exitAFL(cmd)
 		runTimer(fuzzingPath, configData.Timeout)
-
-		time.Sleep(1 * time.Second)
-		go runBot(targetURL)
 
 		select {
 		case <-resetChan:
