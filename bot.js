@@ -44,7 +44,7 @@ const cur_input = 'fuzzing-0/output/.cur_input';
                         console.log(`Read PID from file: ${pid}`);
 
                         // Check if the process with the specified PID exists before killing it
-                        if (pid && Number.isInteger(pid)) {
+                        if (pid && Number.isInteger(pid, '11')) {
                             try {
                                 process.kill(pid);
                                 console.log(`Process with PID ${pid} killed.`);
