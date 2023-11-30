@@ -1,8 +1,8 @@
 {
     "testname": "test",
-    "afl_path": "/usr/local/bin",
+    "afl_path": "/afl",
     "target_binary": "/usr/local/bin/php-cgi ",
-    "base_url": "http://localhost:@@PORT_INCREMENT@@/",
+    "base_url": "http://localhost:{PORT}/",
     "base_port": 80,
     "timeout" : 60,
     "ld_library_path": "/lib",
