@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"os/signal"
 	"strings"
 	"syscall"
@@ -22,6 +23,9 @@ func runTimer(fuzzingPath string, timeout int) {
 	time.Sleep(interval)
 
 	for i := 0; i < timeout; i++ {
+		cmd := exec.Command("node", "bot.js", URL)
+		cmd.Start()
+
 		select {
 		case <-timerChan:
 			fmt.Println("\nInterrupt signal received. Exiting...")
