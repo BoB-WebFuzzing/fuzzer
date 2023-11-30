@@ -70,6 +70,9 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 		go exitAFL(cmd)
 		runTimer(fuzzingPath, configData.Timeout)
 
+		time.Sleep(1 * time.Second)
+		go runBot(targetURL)
+
 		select {
 		case <-resetChan:
 			output := outputBuf.Bytes()
