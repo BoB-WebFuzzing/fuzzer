@@ -234,6 +234,7 @@ func createScript(fuzzingPath string, i int) {
 func createDict(fuzzingPath string) {
 	dictPath := fuzzingPath + "/input/dict.txt"
 	var dictContent string
+	keySet := NewSet()
 	file, err := os.Create(dictPath)
 
 	if err != nil {
@@ -242,8 +243,16 @@ func createDict(fuzzingPath string) {
 
 	defer file.Close()
 
-	for i, param := range requestData.InputSet {
-		dictContent += fmt.Sprintf("string_%d=\"%v\"\n", i, strings.ReplaceAll(url.QueryEscape(param), "%", "\\x"))
+	for _, param := range requestData.InputSet {
+		// dictContent += fmt.Sprintf("string_%d=\"%v\"\n", i, strings.ReplaceAll(url.QueryEscape(param), "%", "\\x")
+		keySet.Add(strings.Split(param, "=")[0])
+	}
+	
+	i := 0
+
+	for param, _ := range keySet.data {
+		dictContent += fmt.Sprintf("string_%d=\"%v\"\n", i, param)
+		i++
 	}
 
 	_, err = file.WriteString(dictContent)
