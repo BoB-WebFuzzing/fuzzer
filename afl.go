@@ -17,6 +17,7 @@ var fuzzStat fuzzCampaignStatus
 var targetPoints map[string]string
 var script []string
 var targetURL string
+var traversalMap map[string]bool
 
 type fuzzTarget struct {
 	TargetPath			string			`json:"target_path"`
@@ -37,6 +38,8 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 	createDict(fuzzingPath)
 	createFuzzStat(fuzzingPath)
 	initPoints(fuzzingPath)
+
+	fmt.Println(traversalMap)
 
 	for i := 0; i < len(targetPoints); i++ {
 		resetChan = make(chan struct{})
@@ -271,10 +274,16 @@ func createFuzzStat(fuzzingPath string) {
 	fuzzStat.TrialComplete = false
 	fuzzStat.Targets = []fuzzTarget{}
 
+	traversalMap = make(map[string]bool)
+
 	for key, value := range requestData.RequestsFound {
 		targetURL := strings.Split(value.URLString, "?")[0]
 		method := strings.Split(key, " ")[0]
 		_, exist := uniqCheck[targetURL]
+
+		if method == "GET" {
+			traversalMap[strings.Split(key, " ")[1]] = false
+		}
 
 		if exist {
 			fuzzStat.Targets[uniqCheck[targetURL]].Requests = append(fuzzStat.Targets[uniqCheck[targetURL]].Requests, key)

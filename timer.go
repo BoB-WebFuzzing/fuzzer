@@ -26,6 +26,32 @@ func runTimer(fuzzingPath string, timeout int) {
 		cmd := exec.Command("node", "bot.js", targetURL)
 		cmd.Start()
 
+		if i % 20 == 0{
+
+			data, err := os.Open("bot.log")
+
+			if err == nil {
+
+				byteValue, _ := ioutil.ReadAll(data)
+				
+				for _ , parsedURL := range strings.Split(string(byteValue), "\n") {
+					traversalMap[parsedURL] = true
+				}
+
+			}
+
+			for key , value := range traversalMap {
+				if !value {
+
+					cmd := exec.Command("node", "traversal_bot.js", key)
+					cmd.Start()
+
+				}
+			}
+
+		}
+		
+
 		select {
 		case <-timerChan:
 			fmt.Println("\nInterrupt signal received. Exiting...")
