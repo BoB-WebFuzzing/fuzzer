@@ -4,22 +4,8 @@ const getenv = require('getenv');
 
 const filePath = '/tmp/httpreqr.pid';
 const cur_input = 'fuzzing-0/output/.cur_input';
-
-export const addCookiesToPage = async (loginCookies, page, cookieData) => {
-    let cookiesarr = cookieData.split(";");
-    let cookies_in = [];
-    for (let cookie of loginCookies) {
-        cookies_in.push(cookie)
-    }
-
-    for (let cookie of cookies_in) {
-        if (cookie["name"] === "token"){
-            page.setExtraHTTPHeaders({Authorization:`Bearer ${cookie["value"]}`});
-        }
-    }
-    await page.setCookie(...cookies_in);
-}
-
+const logFilePath = 'bot.log';
+var url = require('url');
 
 //load cookie function
 const loadCookie = async (page) => {
@@ -28,7 +14,7 @@ const loadCookie = async (page) => {
             const [key, value] = cookie.trim().split('=');
             // 추가하기 전에 key와 value가 비어있는지 확인
             if (key && value) {
-                return { name: key, value: value, httpOnly:true};
+                return { name: key, value: value, domain:url.parse(process.argv[2]).hostname};
             }
             return null; // key 또는 value가 비어있다면 null 반환
         }).filter(Boolean); // null이 아닌 항목만 필터링
@@ -51,16 +37,18 @@ try {
 
 (async () => {
     const browser = await puppeteer.launch({
-        args: ['--no-sandbox'],
+        args: [
+            '--disable-features=site-per-process', '--no-sandbox', '--disable-setuid-sandbox'
+            ],
+        "defaultViewport": null,
         headless: 'new',
     });
 
     const page = await browser.newPage();
     
     const url = process.argv[2] + '?' + parsedStrings[1];
-    
-    await page.goto(url);
 
+    await loadCookie(page); //load cookie
 
     page.on('dialog', async (dialog) => {
         console.log(`Dialog message: ${dialog.message()}`);
@@ -85,6 +73,7 @@ try {
                         try {
                             process.kill(pid, 'SIGSEGV');
                             console.log(`Process with PID ${pid} killed.`);
+                            fs.writeFileSync(logFilePath, `Process with PID ${pid} killed.\n`, 'utf8');
                         } catch (killError) {
                             console.error(`Error killing process with PID ${pid}: ${killError.message}`);
                         }
@@ -94,6 +83,7 @@ try {
                 });
             } else {
                 console.log('alert But not XSS');
+                fs.writeFileSync(logFilePath, 'alert But not XSS\n', 'utf8');
             }
         }
         await dialog.dismiss();
