@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs'); //for working with files
 const getenv = require('getenv');
+const url = require('url');
 
 const filePath = '/tmp/httpreqr.pid';
 const cur_input = 'fuzzing-0/output/.cur_input';
 const logFilePath = 'bot.log';
-var url = require('url');
+
 
 //load cookie function
 const loadCookie = async (page) => {
