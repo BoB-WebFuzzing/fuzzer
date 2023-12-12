@@ -5,8 +5,6 @@ const url = require('url');
 
 const filePath = '/tmp/httpreqr.pid';
 const cur_input = 'fuzzing-0/output/.cur_input';
-const logFilePath = 'bot.log';
-
 
 //load cookie function
 const loadCookie = async (page) => {
@@ -74,7 +72,6 @@ try {
                         try {
                             process.kill(pid, 'SIGSEGV');
                             console.log(`Process with PID ${pid} killed.`);
-                            fs.writeFileSync(logFilePath, `Process with PID ${pid} killed.\n`, 'utf8');
                         } catch (killError) {
                             console.error(`Error killing process with PID ${pid}: ${killError.message}`);
                         }
@@ -84,7 +81,6 @@ try {
                 });
             } else {
                 console.log('alert But not XSS');
-                fs.writeFileSync(logFilePath, 'alert But not XSS\n', 'utf8');
             }
         }
         await dialog.dismiss();
