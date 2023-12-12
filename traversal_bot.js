@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs'); //for working with files
 const getenv = require('getenv');
+const url = require('url');
 
 const filePath = '/tmp/httpreqr.pid';
 const cur_input = 'fuzzing-0/output/.cur_input';
@@ -14,7 +15,7 @@ const loadCookie = async (page) => {
             const [key, value] = cookie.trim().split('=');
             // 추가하기 전에 key와 value가 비어있는지 확인
             if (key && value) {
-                return { name: key, value: value, httpOnly:true};
+                return { name: key, value: value, domain:url.parse(process.argv[2]).hostname};
             }
             return null; // key 또는 value가 비어있다면 null 반환
         }).filter(Boolean); // null이 아닌 항목만 필터링
@@ -37,15 +38,16 @@ try {
 
 (async () => {
     const browser = await puppeteer.launch({
-        args: ['--no-sandbox'],
+        args: [
+            '--disable-features=site-per-process', '--no-sandbox', '--disable-setuid-sandbox'
+            ],
+        "defaultViewport": null,
         headless: 'new',
     });
 
     const page = await browser.newPage();
     
     const url = process.argv[2] + '?' + parsedStrings[1];
-    
-    await page.goto(url);
 
     await loadCookie(page); //load cookie
 
