@@ -4,7 +4,21 @@ const getenv = require('getenv');
 
 const filePath = '/tmp/httpreqr.pid';
 const cur_input = 'fuzzing-0/output/.cur_input';
-const logFilePath = 'bot.log';
+
+export const addCookiesToPage = async (loginCookies, page, cookieData) => {
+    let cookiesarr = cookieData.split(";");
+    let cookies_in = [];
+    for (let cookie of loginCookies) {
+        cookies_in.push(cookie)
+    }
+
+    for (let cookie of cookies_in) {
+        if (cookie["name"] === "token"){
+            page.setExtraHTTPHeaders({Authorization:`Bearer ${cookie["value"]}`});
+        }
+    }
+    await page.setCookie(...cookies_in);
+}
 
 
 //load cookie function
@@ -47,7 +61,6 @@ try {
     
     await page.goto(url);
 
-    await loadCookie(page); //load cookie
 
     page.on('dialog', async (dialog) => {
         console.log(`Dialog message: ${dialog.message()}`);
@@ -72,7 +85,6 @@ try {
                         try {
                             process.kill(pid, 'SIGSEGV');
                             console.log(`Process with PID ${pid} killed.`);
-                            fs.writeFileSync(logFilePath, `Process with PID ${pid} killed.\n`, 'utf8');
                         } catch (killError) {
                             console.error(`Error killing process with PID ${pid}: ${killError.message}`);
                         }
@@ -82,7 +94,6 @@ try {
                 });
             } else {
                 console.log('alert But not XSS');
-                fs.writeFileSync(logFilePath, 'alert But not XSS\n', 'utf8');
             }
         }
         await dialog.dismiss();
