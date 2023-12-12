@@ -209,6 +209,7 @@ func createScript(fuzzingPath string, i int) {
 	}
 
 	scriptContent += configData.AFLPath + "/afl-fuzz"
+	scriptContent += " -t 3000 "
 	scriptContent += " -i " + fuzzingPath + "/input/seeds/"// + strings.ReplaceAll(strings.Split(targets[i], "//")[1], "/", "+")
 	scriptContent += " -o " + fuzzingPath + "/output"
 	scriptContent += " -m " + configData.Memory
@@ -350,7 +351,7 @@ func createSeed(fuzzingPath string, i int) {
 
 		mkdir(dir)
 
-		seed = fmt.Sprintf("\x00%v\x00%v\x00", getQuery, postData)
+		seed = fmt.Sprintf("\x00%v\x00%v\x00%v\x00", getQuery, postData, headers)
 
 		file, err := os.Create(dir + fmt.Sprintf("/seed-%d", j))
 
