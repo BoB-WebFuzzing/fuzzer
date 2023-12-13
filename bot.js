@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs'); //for working with files
-const getenv = require('getenv');
 const url = require('url');
 
 const filePath = '/tmp/httpreqr.pid';
