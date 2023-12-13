@@ -8,7 +8,7 @@ const cur_input = 'fuzzing-0/output/.cur_input';
 
 //load cookie function
 const loadCookie = async (page) => {
-    if (getenv('LOGIN_COOKIE')) {
+    if (process.env.LOGIN_COOKIE != undefined) {
         const cookiesArray = getenv('LOGIN_COOKIE').split(';').map(cookie => {
             const [key, value] = cookie.trim().split('=');
             // 추가하기 전에 key와 value가 비어있는지 확인
