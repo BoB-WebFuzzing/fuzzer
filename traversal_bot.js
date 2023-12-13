@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs'); //for working with files
-const getenv = require('getenv');
 const url = require('url');
 
 const filePath = '/tmp/httpreqr.pid';
@@ -10,7 +9,7 @@ const logFilePath = 'bot.log';
 
 //load cookie function
 const loadCookie = async (page) => {
-    if (getenv('LOGIN_COOKIE')) {
+    if (process.env.LOGIN_COOKIE != undefined) {
         const cookiesArray = getenv('LOGIN_COOKIE').split(';').map(cookie => {
             const [key, value] = cookie.trim().split('=');
             // 추가하기 전에 key와 value가 비어있는지 확인
