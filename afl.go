@@ -81,6 +81,7 @@ func runAFL(fuzzingPath string, fuzzerNumber int) {
 			finishFuzz(fuzzingPath, i)
 			cleanDir(fuzzingPath + "/input")
 			cleanDir(fuzzingPath + "/output")
+			os.Remove("bot.log")
 			os.Exit(0)
 		default:
 			output := outputBuf.Bytes()
