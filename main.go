@@ -8,6 +8,8 @@ import (
 )
 
 func main() {
+	printName()
+
 	if len(os.Args) != 3 {
 		usage()
 	}
@@ -23,7 +25,6 @@ func main() {
 	termChan = make(chan os.Signal, 1)
 	intChan = make(chan os.Signal, 1)
 
-	printName()
 	// runTimer("tmp", configData.Timeout)
 
 	// printConfig()
@@ -35,8 +36,8 @@ func main() {
 	// fmt.Println("------------------------------------------------------------")
 
 
-	os.Setenv("LOGIN_COOKIE", "checkFuzz=true")
-	// Login()
+	// os.Setenv("LOGIN_COOKIE", "checkFuzz=true")
+	Login()
 
 	// fmt.Println("------------------------------------------------------------")
 
