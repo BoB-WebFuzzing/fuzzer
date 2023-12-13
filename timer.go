@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -22,35 +23,35 @@ func runTimer(fuzzingPath string, timeout int) {
 
 	time.Sleep(interval)
 
+
 	for i := 0; i < timeout; i++ {
-		cmd := exec.Command("node", "bot.js", targetURL)
-		cmd.Start()
+		if _, err := os.Stat("/tmp/XSS"); errors.Is(err, os.ErrNotExist) {
+		  	// /tmp/XSS is not found
+	  	} else {
+		  	cmd := exec.Command("node", "bot.js", targetURL)
+		  	cmd.Start()
 
-		if i % 20 == 0{
+		  	if i % 20 == 0{
+			  	data, err := os.Open("bot.log")
 
-			data, err := os.Open("bot.log")
+			  	if err == nil {
+				  	byteValue, _ := ioutil.ReadAll(data)
 
-			if err == nil {
+				  	for _, parsedURL := range strings.Split(string(byteValue), "\n") {
+					  	traversalMap[parsedURL] = true
+				  	}
+			  	}
 
-				byteValue, _ := ioutil.ReadAll(data)
-				
-				for _ , parsedURL := range strings.Split(string(byteValue), "\n") {
-					traversalMap[parsedURL] = true
-				}
+			  	for key, value := range traversalMap {
+				  	if !value {
+					  	cmd := exec.Command("node", "traversal_bot.js", key)
+					  	cmd.Start()
+				  	}
+			  	}
+		  	}
 
-			}
-
-			for key , value := range traversalMap {
-				if !value {
-
-					cmd := exec.Command("node", "traversal_bot.js", key)
-					cmd.Start()
-
-				}
-			}
-
+			os.Remove("/tmp/XSS")
 		}
-		
 
 		select {
 		case <-timerChan:
