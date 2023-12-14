@@ -24,25 +24,25 @@ make clean-dir # clean all except fuzzer
 ```json
 {
     "testname": "test",
-    "afl_path": "/usr/local/bin/",
-    "target_binary": "/httpreqr --json --url ",
+    "afl_path": "/afl",
+    "target_binary": "/usr/local/bin/php-cgi ",
     "base_url": "http://localhost:{PORT}/",
-    "base_port": 8080,
-    "timeout" : 15,
+    "base_port": 80,
+    "timeout" : 60,
     "ld_library_path": "/lib",
     "ld_preload": "/lib/hook_recv.so",
     "memory": "8G",
     "first_crash": true,
     "cores": 1,
     "login": {
-        "url": "http://localhost:8080/",
-        "port": -1,
-        "postData": "{\"email\":\"admin@tmp.co.kr\",\"password\":\"admin1234\"}",
+        "url": "http://localhost:{PORT}/login",
+        "port": 80,
+        "postData": "id=admin&pw=admin",
         "getData": "id=guest&pw=guest",
-        "positiveHeaders": {"content-type": "application/json"},
+        "positiveHeaders": {"content-type": "Application/json"},
         "positiveBody": "",
         "method": "POST",
-        "loginSessionCookie" : ""
+        "loginSessionCookie" : "PHPSESSID"
     }
 }
 ```
