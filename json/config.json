@@ -11,13 +11,13 @@
     "first_crash": true,
     "cores": 1,
     "login": {
-        "url": "http://localhost",
-        "port": 3000,
+        "url": "http://localhost:{PORT}/login",
+        "port": 80,
         "postData": "id=admin&pw=admin",
         "getData": "id=guest&pw=guest",
         "positiveHeaders": {"content-type": "Application/json"},
         "positiveBody": "",
         "method": "POST",
-        "loginSessionCookie" : ""
+        "loginSessionCookie" : "PHPSESSID"
     }
 }
